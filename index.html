@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart.jsを使ってグラフを描画してみよう</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <div id="app">
+
+        <div class="jumbotron">
+            <h1>Chart.jsを使ってグラフを描画してみよう</h1>
+            <p class="lead">
+                Chart.js（とVue.js）を使ってグラフを描画するサンプルサイトです。
+            </p>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 col-md-6">
+
+                    <h2>使用するデータ</h2>
+                    <div v-for="(item,index) in datasets" :key="index" class="row py-2">
+                        <div class="col-3">
+                            <input type="number" class="form-control" v-model.number="datasets[index]">
+                        </div>
+                        <div class="col">
+                            <input type="range" class="form-control" min="-500" max="500"
+                                v-model.number="datasets[index]">
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-primary" v-on:click="add(index)">足す</button>
+                            <button class="btn btn-secondary" v-on:click="del(index)"
+                                :disabled="datasets.length < 2">消す</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 my-5">
+                            <h3>生成されたデータ</h3>
+                            <div class="bg-light p-3">
+                                <pre>{{ toRaw(datasets) }}</pre>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-12 col-md-6">
+
+                    <div class="col-12 mb-5">
+                        <h2>グラフの種類</h2>
+                        <select class="form-control" v-model="graphSelected">
+                            <option v-for="(item,index) in graphs" :key="index" :value="item.type">
+                                {{ item.name }}</option>
+                        </select>
+
+                    </div>
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col">
+                                <h2>グラフ</h2>
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn-info" v-on:click="randData">ランダムに生成する</button>
+                            </div>
+                        </div>
+                        <div>
+                            <canvas id="charts"></canvas>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
